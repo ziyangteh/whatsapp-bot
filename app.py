@@ -85,6 +85,7 @@ def bot():
 def handle_numbered_choice(choice, user_session, msg):
     """Handle numbered menu choices based on current state"""
     choice_num = int(choice)
+    resp = MessagingResponse()
     
     if user_session['state'] == 'buying':
         property_types = {
@@ -120,6 +121,8 @@ def handle_numbered_choice(choice, user_session, msg):
             4: "Room Rental"
         }
         if choice_num in rental_types:
+            user_session['data']['rental_type'] = rental_types[choice_num]
+            user_session['state'] = 'rent_budget'
             msg.body(f"🏡 {rental_types[choice_num]} - great choice!\n\n*Monthly budget range?*\n\n1️⃣ Under RM1,500\n2️⃣ RM1,500 - RM3,000\n3️⃣ RM3,000 - RM5,000\n4️⃣ Above RM5,000\n\n*Reply with number (1-4)*\n\n_I'll find the best options for you!_")
     
     elif user_session['state'] == 'pricing':
@@ -151,14 +154,35 @@ def handle_numbered_choice(choice, user_session, msg):
             # Redirect to appropriate handler
             return handle_main_menu_choice(main_menu_options[choice_num], user_session, msg)
     
-    return str(MessagingResponse().message(msg.body))
+    return str(resp)
 
 def handle_main_menu_choice(choice, user_session, msg):
     """Handle main menu selections"""
-    # This redirects back to the main handlers
-    # You can integrate this better by refactoring the main function
-    pass
-
+    resp = MessagingResponse()
+    
+    if choice == "buy":
+        user_session['state'] = 'buying'
+        msg.body("🔍 Great! Let's find your perfect property.\n\n*What type are you looking for?*\n\n1️⃣ Apartment/Condo\n2️⃣ Landed House\n3️⃣ Commercial Space\n4️⃣ Investment Property\n\n💡 *Reply with number (1-4) or type the property type*")
+    
+    elif choice == "rent":
+        user_session['state'] = 'renting'
+        msg.body("🏡 Perfect! Let's find you a rental.\n\n*What are you looking for?*\n\n1️⃣ Residential Rental\n2️⃣ Commercial Space\n3️⃣ Short-term Stay\n4️⃣ Room Rental\n\n💡 *Reply with number (1-4) or describe what you need*")
+    
+    elif choice == "price":
+        user_session['state'] = 'pricing'
+        msg.body("💰 I can help with property prices!\n\n*Choose your area:*\n\n1️⃣ Kuala Lumpur\n2️⃣ Selangor\n3️⃣ Penang\n4️⃣ Johor\n5️⃣ Other Area\n\n💡 *Reply with number (1-5) or type your area name*")
+    
+    elif choice == "invest":
+        user_session['state'] = 'investment'
+        msg.body("📈 Smart thinking! Investment help:\n\n*What interests you?*\n\n1️⃣ Best Investment Areas\n2️⃣ Calculate ROI\n3️⃣ Investment Tips\n4️⃣ Market Trends\n\n💡 *Reply with number (1-4) or tell me what you'd like to know*")
+    
+    elif choice == "viewing":
+        user_session['state'] = 'booking'
+        msg.body("📅 Let's book your viewing!\n\n*When works best?*\n\n1️⃣ This Week\n2️⃣ Next Week\n3️⃣ Weekends Only\n4️⃣ Specific Date\n\n💡 *Reply with number (1-4) or tell me your preferred time*")
+    
+    elif choice == "contact":
+        msg.body("📞 Here's how to reach me:\n\n• *WhatsApp:* +60 12-345 6789\n• *Email:* sarah@propertypro.my\n• *Office:* +60 3-1234 5678\n\n*Available:* Mon-Sat, 9AM-7PM\n\n💡 *Type 'menu' or '0' to return to main options*")
+    
     return str(resp)
 
 if __name__ == "__main__":
