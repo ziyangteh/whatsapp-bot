@@ -30,38 +30,38 @@ def bot():
     if incoming_msg in ['0', 'menu', 'main menu', 'restart', 'start over']:
         user_session['state'] = None
         user_session['data'] = {}
-        msg.body("🏠 *Main Menu:*\n\n1️⃣ Buy Property\n2️⃣ Rent Property\n3️⃣ Market Prices\n4️⃣ Investment Advice\n5️⃣ Book Viewing\n6️⃣ Contact Info\n\n💡 *Reply with number (1-6) or type what you need*")
+        msg.body("🏠 *Main Menu:*\n\n• Buy Property\n• Rent Property\n• Market Prices\n• Investment Advice\n• Book Viewing\n• Contact Info\n\n💡 *Just type what you need*")
         return str(resp)
     
     # Greeting responses
     if any(word in incoming_msg for word in ['hi', 'hello', 'hey', 'start']):
         user_session['state'] = None  # Reset state
-        msg.body("🏠 Hello! I'm Sarah, your property consultant assistant.\n\n*Please choose an option:*\n\n1️⃣ Buy Property\n2️⃣ Rent Property  \n3️⃣ Get Market Prices\n4️⃣ Investment Advice\n5️⃣ Book Viewing\n6️⃣ Contact Me\n\n💡 *You can reply with:*\n• *Number* (1-6) - Quick & easy!\n• *Text* (e.g., 'buy', 'rent', 'prices')")
+        msg.body("🏠 Hello! I'm Sarah, your property consultant assistant.\n\n*Please choose an option:*\n\n• Buy Property\n• Rent Property\n• Get Market Prices\n• Investment Advice\n• Book Viewing\n• Contact Me\n\n💡 *Just type what you need* (e.g., 'buy', 'rent', 'prices')")
     
     # Property search queries
     elif any(word in incoming_msg for word in ['buy', 'purchase', 'looking for', 'find', 'search']) or incoming_msg == '1':
         user_session['state'] = 'buying'
-        msg.body("🔍 Great! Let's find your perfect property.\n\n*What type are you looking for?*\n\n1️⃣ Apartment/Condo\n2️⃣ Landed House\n3️⃣ Commercial Space\n4️⃣ Investment Property\n\n💡 *Reply with number (1-4) or type the property type*")
+        msg.body("🔍 Great! Let's find your perfect property.\n\n*What type are you looking for?*\n\n• Apartment/Condo\n• Landed House\n• Commercial Space\n• Investment Property\n\n💡 *Just type the property type*")
     
     # Rental queries  
     elif any(word in incoming_msg for word in ['rent', 'rental', 'lease', 'tenant']) or incoming_msg == '2':
         user_session['state'] = 'renting'
-        msg.body("🏡 Perfect! Let's find you a rental.\n\n*What are you looking for?*\n\n1️⃣ Residential Rental\n2️⃣ Commercial Space\n3️⃣ Short-term Stay\n4️⃣ Room Rental\n\n💡 *Reply with number (1-4) or describe what you need*")
+        msg.body("🏡 Perfect! Let's find you a rental.\n\n*What are you looking for?*\n\n• Residential Rental\n• Commercial Space\n• Short-term Stay\n• Room Rental\n\n💡 *Just describe what you need*")
     
     # Price and valuation queries
     elif any(word in incoming_msg for word in ['price', 'cost', 'value', 'worth', 'market']) or incoming_msg == '3':
         user_session['state'] = 'pricing'
-        msg.body("💰 I can help with property prices!\n\n*Choose your area:*\n\n1️⃣ Kuala Lumpur\n2️⃣ Selangor\n3️⃣ Penang\n4️⃣ Johor\n5️⃣ Other Area\n\n💡 *Reply with number (1-5) or type your area name*")
+        msg.body("💰 I can help with property prices!\n\n*Choose your area:*\n\n• Kuala Lumpur\n• Selangor\n• Penang\n• Johor\n• Other Area\n\n💡 *Just type your area name*")
     
     # Investment advice
     elif any(word in incoming_msg for word in ['invest', 'investment', 'roi', 'return', 'profit']) or incoming_msg == '4':
         user_session['state'] = 'investment'
-        msg.body("📈 Smart thinking! Investment help:\n\n*What interests you?*\n\n1️⃣ Best Investment Areas\n2️⃣ Calculate ROI\n3️⃣ Investment Tips\n4️⃣ Market Trends\n\n💡 *Reply with number (1-4) or tell me what you'd like to know*")
+        msg.body("📈 Smart thinking! Investment help:\n\n*What interests you?*\n\n• Best Investment Areas\n• Calculate ROI\n• Investment Tips\n• Market Trends\n\n💡 *Tell me what you'd like to know*")
     
     # Appointment booking
     elif any(word in incoming_msg for word in ['viewing', 'appointment', 'visit', 'see', 'tour']) or incoming_msg == '5':
         user_session['state'] = 'booking'
-        msg.body("📅 Let's book your viewing!\n\n*When works best?*\n\n1️⃣ This Week\n2️⃣ Next Week\n3️⃣ Weekends Only\n4️⃣ Specific Date\n\n💡 *Reply with number (1-4) or tell me your preferred time*")
+        msg.body("📅 Let's book your viewing!\n\n*When works best?*\n\n• This Week\n• Next Week\n• Weekends Only\n• Specific Date\n\n💡 *Tell me your preferred time*")
     
     # Contact and services
     elif any(word in incoming_msg for word in ['contact', 'call', 'whatsapp', 'email', 'reach']) or incoming_msg == '6':
@@ -69,7 +69,7 @@ def bot():
     
     # Help menu
     elif 'help' in incoming_msg:
-        msg.body("🏠 *Main Menu:*\n\n1️⃣ Buy Property\n2️⃣ Rent Property\n3️⃣ Market Prices\n4️⃣ Investment Advice\n5️⃣ Book Viewing\n6️⃣ Contact Info\n\n💡 *Two ways to respond:*\n• *Quick:* Just type a number (1-6)\n• *Detailed:* Type what you want (e.g., 'buy condo')\n\n_Commands: 'menu', 'restart', 'help'_")
+        msg.body("🏠 *Main Menu:*\n\n• Buy Property\n• Rent Property\n• Market Prices\n• Investment Advice\n• Book Viewing\n• Contact Info\n\n💡 *How to respond:*\n• Type what you want (e.g., 'buy condo')\n\n_Commands: 'menu', 'restart', 'help'_")
     
     # Goodbye
     elif any(word in incoming_msg for word in ['bye', 'goodbye', 'thanks', 'thank you']):
@@ -78,7 +78,7 @@ def bot():
     
     # Default response with options
     else:
-        msg.body("🤔 I'd love to help you with that!\n\n*Quick Menu:*\n\n1️⃣ Buy Property\n2️⃣ Rent Property\n3️⃣ Get Prices\n4️⃣ Investment Help\n5️⃣ Book Viewing\n6️⃣ Contact Me\n\n💡 *Easy ways to respond:*\n• *Type a number* (1-6) - Super quick!\n• *Type keywords* (buy, rent, prices, etc.)\n• *Ask anything* - I'll do my best to help!")
+        msg.body("🤔 I'd love to help you with that!\n\n*Quick Menu:*\n\n• Buy Property\n• Rent Property\n• Get Prices\n• Investment Help\n• Book Viewing\n• Contact Me\n\n💡 *Easy ways to respond:*\n• *Type keywords* (buy, rent, prices, etc.)\n• *Ask anything* - I'll do my best to help!")
 
     return str(resp)
 
@@ -97,7 +97,7 @@ def handle_numbered_choice(choice, user_session, msg):
         if choice_num in property_types:
             user_session['data']['property_type'] = property_types[choice_num]
             user_session['state'] = 'buy_location'
-            msg.body(f"✅ {property_types[choice_num]} selected!\n\n*Which area interests you?*\n\n1️⃣ KL City Center\n2️⃣ Selangor (PJ/Subang)\n3️⃣ Penang\n4️⃣ Johor Bahru\n5️⃣ Other Area\n\n*Reply with number (1-5)*")
+            msg.body(f"✅ {property_types[choice_num]} selected!\n\n*Which area interests you?*\n\n• KL City Center\n• Selangor (PJ/Subang)\n• Penang\n• Johor Bahru\n• Other Area\n\n*Just type the area name*")
     
     elif user_session['state'] == 'buy_location':
         locations = {
@@ -110,7 +110,7 @@ def handle_numbered_choice(choice, user_session, msg):
         if choice_num in locations:
             property_type = user_session['data'].get('property_type', 'Property')
             location = locations[choice_num]
-            msg.body(f"🎯 Perfect! Looking for *{property_type}* in *{location}*\n\n*What's your budget range?*\n\n1️⃣ Under RM500k\n2️⃣ RM500k - RM1M\n3️⃣ RM1M - RM2M\n4️⃣ Above RM2M\n5️⃣ I need advice\n\n*Reply with number (1-5)*")
+            msg.body(f"🎯 Perfect! Looking for *{property_type}* in *{location}*\n\n*What's your budget range?*\n\n• Under RM500k\n• RM500k - RM1M\n• RM1M - RM2M\n• Above RM2M\n• I need advice\n\n*Just type your budget or range*")
             user_session['state'] = 'buy_budget'
     
     elif user_session['state'] == 'renting':
@@ -123,7 +123,7 @@ def handle_numbered_choice(choice, user_session, msg):
         if choice_num in rental_types:
             user_session['data']['rental_type'] = rental_types[choice_num]
             user_session['state'] = 'rent_budget'
-            msg.body(f"🏡 {rental_types[choice_num]} - great choice!\n\n*Monthly budget range?*\n\n1️⃣ Under RM1,500\n2️⃣ RM1,500 - RM3,000\n3️⃣ RM3,000 - RM5,000\n4️⃣ Above RM5,000\n\n*Reply with number (1-4)*\n\n_I'll find the best options for you!_")
+            msg.body(f"🏡 {rental_types[choice_num]} - great choice!\n\n*Monthly budget range?*\n\n• Under RM1,500\n• RM1,500 - RM3,000\n• RM3,000 - RM5,000\n• Above RM5,000\n\n_I'll find the best options for you!_")
     
     elif user_session['state'] == 'pricing':
         areas = {
@@ -134,7 +134,7 @@ def handle_numbered_choice(choice, user_session, msg):
         }
         if choice_num in areas:
             area, price = areas[choice_num]
-            msg.body(f"💰 *{area} Property Prices:*\n\n📊 Average: {price}\n\n*Want specific info?*\n\n1️⃣ Condo prices\n2️⃣ Landed house prices\n3️⃣ Rental rates\n4️⃣ Get property valuation\n\n*Reply with number (1-4)*")
+            msg.body(f"💰 *{area} Property Prices:*\n\n📊 Average: {price}\n\n*Want specific info?*\n\n• Condo prices\n• Landed house prices\n• Rental rates\n• Get property valuation\n\n*Just tell me what you'd like to know*")
         elif choice_num == 5:
             msg.body("📍 *Other Area Pricing*\n\nPlease share your specific area and I'll get you the latest market rates!\n\n_Just type the area name (e.g., 'Ipoh', 'Melaka', 'Kota Kinabalu')_")
     
@@ -162,23 +162,23 @@ def handle_main_menu_choice(choice, user_session, msg):
     
     if choice == "buy":
         user_session['state'] = 'buying'
-        msg.body("🔍 Great! Let's find your perfect property.\n\n*What type are you looking for?*\n\n1️⃣ Apartment/Condo\n2️⃣ Landed House\n3️⃣ Commercial Space\n4️⃣ Investment Property\n\n💡 *Reply with number (1-4) or type the property type*")
+        msg.body("🔍 Great! Let's find your perfect property.\n\n*What type are you looking for?*\n\n• Apartment/Condo\n• Landed House\n• Commercial Space\n• Investment Property\n\n💡 *Just type the property type*")
     
     elif choice == "rent":
         user_session['state'] = 'renting'
-        msg.body("🏡 Perfect! Let's find you a rental.\n\n*What are you looking for?*\n\n1️⃣ Residential Rental\n2️⃣ Commercial Space\n3️⃣ Short-term Stay\n4️⃣ Room Rental\n\n💡 *Reply with number (1-4) or describe what you need*")
+        msg.body("🏡 Perfect! Let's find you a rental.\n\n*What are you looking for?*\n\n• Residential Rental\n• Commercial Space\n• Short-term Stay\n• Room Rental\n\n💡 *Just describe what you need*")
     
     elif choice == "price":
         user_session['state'] = 'pricing'
-        msg.body("💰 I can help with property prices!\n\n*Choose your area:*\n\n1️⃣ Kuala Lumpur\n2️⃣ Selangor\n3️⃣ Penang\n4️⃣ Johor\n5️⃣ Other Area\n\n💡 *Reply with number (1-5) or type your area name*")
+        msg.body("💰 I can help with property prices!\n\n*Choose your area:*\n\n• Kuala Lumpur\n• Selangor\n• Penang\n• Johor\n• Other Area\n\n💡 *Just type your area name*")
     
     elif choice == "invest":
         user_session['state'] = 'investment'
-        msg.body("📈 Smart thinking! Investment help:\n\n*What interests you?*\n\n1️⃣ Best Investment Areas\n2️⃣ Calculate ROI\n3️⃣ Investment Tips\n4️⃣ Market Trends\n\n💡 *Reply with number (1-4) or tell me what you'd like to know*")
+        msg.body("📈 Smart thinking! Investment help:\n\n*What interests you?*\n\n• Best Investment Areas\n• Calculate ROI\n• Investment Tips\n• Market Trends\n\n💡 *Tell me what you'd like to know*")
     
     elif choice == "viewing":
         user_session['state'] = 'booking'
-        msg.body("📅 Let's book your viewing!\n\n*When works best?*\n\n1️⃣ This Week\n2️⃣ Next Week\n3️⃣ Weekends Only\n4️⃣ Specific Date\n\n💡 *Reply with number (1-4) or tell me your preferred time*")
+        msg.body("📅 Let's book your viewing!\n\n*When works best?*\n\n• This Week\n• Next Week\n• Weekends Only\n• Specific Date\n\n💡 *Tell me your preferred time*")
     
     elif choice == "contact":
         msg.body("📞 Here's how to reach me:\n\n• *WhatsApp:* +60 12-345 6789\n• *Email:* sarah@propertypro.my\n• *Office:* +60 3-1234 5678\n\n*Available:* Mon-Sat, 9AM-7PM\n\n💡 *Type 'menu' or '0' to return to main options*")
