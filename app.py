@@ -6,8 +6,11 @@ app = Flask(__name__)
 # Simple session storage (use Redis/database in production)
 user_sessions = {}
 
-@app.route("/bot", methods=['POST'])
+@app.route("/bot", methods=['GET', 'POST'])
 def bot():
+    if request.method == 'GET':
+        return "I'm alive!", 200
+
     incoming_msg = request.values.get('Body', '').strip().lower()
     user_phone = request.values.get('From', '')  # Get user's phone number for session tracking
     resp = MessagingResponse()
