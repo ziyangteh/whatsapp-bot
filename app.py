@@ -26,6 +26,12 @@ def bot():
     if incoming_msg.isdigit():
         return handle_numbered_choice(incoming_msg, user_session, msg)
     
+    # Handle state-based text responses
+    if user_session['state'] is not None:
+        result = handle_text_response(incoming_msg, user_session, msg)
+        if result:
+            return result
+    
     # Handle "0" or "menu" to return to main menu
     if incoming_msg in ['0', 'menu', 'main menu', 'restart', 'start over']:
         user_session['state'] = None
@@ -184,6 +190,64 @@ def handle_main_menu_choice(choice, user_session, msg):
         msg.body("📞 Here's how to reach me:\n\n• *WhatsApp:* +60 12-345 6789\n• *Email:* sarah@propertypro.my\n• *Office:* +60 3-1234 5678\n\n*Available:* Mon-Sat, 9AM-7PM\n\n💡 *Type 'menu' or '0' to return to main options*")
     
     return str(resp)
+
+def handle_text_response(incoming_msg, user_session, msg):
+    """Handle text-based responses based on current state"""
+    resp = MessagingResponse()
+    
+    if user_session['state'] == 'buying':
+        # Handle property type selection
+        property_types = ["apartment", "condo", "apartment/condo", "house", "landed", "landed house", 
+                         "commercial", "commercial space", "investment", "investment property"]
+        
+        if any(prop_type in incoming_msg for prop_type in ["apartment", "condo", "apartment/condo"]):
+            user_session['data']['property_type'] = "Apartment/Condo"
+            user_session['state'] = 'buy_location'
+            msg.body("✅ Apartment/Condo selected!\n\n*Which area interests you?*\n\n• KL City Center\n• Selangor (PJ/Subang)\n• Penang\n• Johor Bahru\n• Other Area\n\n*Just type the area name*")
+            return str(resp)
+            
+        elif any(prop_type in incoming_msg for prop_type in ["house", "landed", "landed house"]):
+            user_session['data']['property_type'] = "Landed House"
+            user_session['state'] = 'buy_location'
+            msg.body("✅ Landed House selected!\n\n*Which area interests you?*\n\n• KL City Center\n• Selangor (PJ/Subang)\n• Penang\n• Johor Bahru\n• Other Area\n\n*Just type the area name*")
+            return str(resp)
+            
+        elif any(prop_type in incoming_msg for prop_type in ["commercial", "commercial space"]):
+            user_session['data']['property_type'] = "Commercial Space"
+            user_session['state'] = 'buy_location'
+            msg.body("✅ Commercial Space selected!\n\n*Which area interests you?*\n\n• KL City Center\n• Selangor (PJ/Subang)\n• Penang\n• Johor Bahru\n• Other Area\n\n*Just type the area name*")
+            return str(resp)
+            
+        elif any(prop_type in incoming_msg for prop_type in ["investment", "investment property"]):
+            user_session['data']['property_type'] = "Investment Property"
+            user_session['state'] = 'buy_location'
+            msg.body("✅ Investment Property selected!\n\n*Which area interests you?*\n\n• KL City Center\n• Selangor (PJ/Subang)\n• Penang\n• Johor Bahru\n• Other Area\n\n*Just type the area name*")
+            return str(resp)
+    
+    elif user_session['state'] == 'buy_location':
+        # Handle location selection
+        locations = {
+            "kl": "KL City Center",
+            "kuala lumpur": "KL City Center",
+            "selangor": "Selangor (PJ/Subang)",
+            "pj": "Selangor (PJ/Subang)",
+            "subang": "Selangor (PJ/Subang)",
+            "penang": "Penang",
+            "johor": "Johor Bahru",
+            "johor bahru": "Johor Bahru"
+        }
+        
+        for key, location in locations.items():
+            if key in incoming_msg:
+                property_type = user_session['data'].get('property_type', 'Property')
+                user_session['data']['location'] = location
+                user_session['state'] = 'buy_budget'
+                msg.body(f"🎯 Perfect! Looking for *{property_type}* in *{location}*\n\n*What's your budget range?*\n\n• Under RM500k\n• RM500k - RM1M\n• RM1M - RM2M\n• Above RM2M\n• I need advice\n\n*Just type your budget or range*")
+                return str(resp)
+    
+    # Add more state handlers as needed
+    
+    return None  # Return None if no matching handler found
 
 if __name__ == "__main__":
     import os
